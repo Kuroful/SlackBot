@@ -1,9 +1,3 @@
-#Content in the .env file
-"""
-SLACK_TOKEN=xoxb-1684424813751-1718334916209-6fHUxr46xsXetDKE2f4F3eQl
-SIGNING_SECRET=831d0b5f4e7855d9289fcf69a1ab4d7d
-"""
-
 import slack
 import os
 from pathlib import Path
