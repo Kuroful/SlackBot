@@ -33,6 +33,7 @@ def message(payload):
     event = payload.get('event',{})
     channel_id = event.get('channel')
     user_id = event.get('user')
+    
     text2 = event.get('text')
     if BOT_ID !=user_id:
         client.chat_postMessage(channel=channel_id, text=text2)
