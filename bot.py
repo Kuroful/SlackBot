@@ -6,6 +6,11 @@ from dotenv import load_dotenv
 from flask import Flask
 # Handles events from Slack
 from slackeventsapi import SlackEventAdapter
+import requests
+import json
+import math
+key = "c82b1a94b8af19b14ef3e51c220c554d"
+base = "https://api.openweathermap.org/data/2.5/"
 
 # Load the Token from .env file
 env_path = Path('.') / '.env'
@@ -32,12 +37,16 @@ def message(payload):
     print(payload)
     event = payload.get('event',{})
     channel_id = event.get('channel')
-    user_id = event.get('user')
-    
-    
+    user_id = event.get('user')    
     text2 = event.get('text')
+    
+    url = "https://api.openweathermap.org/data/2.5/weather?q=%s&units=metric&appid=%s" % (text2,key)
+    response = requests.get(url)
+    data = json.loads(response.text2)
     if BOT_ID !=user_id:
         client.chat_postMessage(channel=channel_id, text=text2)
+        if isinstance(math.ceil(data['main']['temp']), int) == True:
+            client.chat_postMessage(channel=channel_id, text=str(math.ceil(data['main']['temp'])) + '°C')
 
 # Run the webserver micro-service
 if __name__ == "__main__":
